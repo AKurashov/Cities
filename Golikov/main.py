@@ -1,4 +1,8 @@
 from opencage.geocoder import OpenCageGeocode
+from  tkinter import *
+
+from coordinates_web import label
+
 
 def get_coordinates(city, key):
     try:
@@ -13,7 +17,26 @@ def get_coordinates(city, key):
     except Exception as er:
         return f"Возникла ошибка:{er}"
 
+
+def show_coordinates():
+    city = entry.get()
+    coordinates = get_coordinates(city, key)
+    label.config(text = f"Координаты города {city}: {coordinates}" )
+
 key = '8b4a33d6325641709f146b214f0c1c78'
-city = "Samara"
-coordinates = get_coordinates(city, key)
-print(f"Координаты города {city}: {coordinates}")
+
+window = Tk()
+window.title("Координаты городов")
+window.geometry("300x400")
+
+entry = Entry()
+entry.pack()
+
+button = Button(text = "Получение координат", command=show_coordinates)
+button.pack()
+
+label = Label(text = "Введите город и нажмите на кнопку получение координат")
+label.pack()
+
+window.mainloop()
+
